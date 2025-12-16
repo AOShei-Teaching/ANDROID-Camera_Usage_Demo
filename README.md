@@ -96,7 +96,8 @@ private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnal
 2. **Sync Gradle** to ensure dependencies are downloaded.
 3. **Run on a physical device** (Recommended).
 4. **Grant Permissions:** When prompted, allow the app to take pictures and record video.
-5. **Test:**
+
+**Test:**
   * Tap the **"Take Photo"** button.
   * Tap the **"Start Capture"** button to record video, and tap again to stop.
   * Observe the "Luminosity" text updating as you point the camera at light or dark areas.
