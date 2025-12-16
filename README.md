@@ -35,16 +35,18 @@ To access hardware features, this app declares the following permissions in `And
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
-
 ```
 
 * **CAMERA:** Required to see the preview and capture content.
 * **RECORD_AUDIO:** Required specifically for recording sound with video.
-* **WRITE_EXTERNAL_STORAGE:** Required for saving files on older Android versions (SDK < 29). On newer Android versions, we use Scoped Storage via `MediaStore`, so this permission is not needed.
+* **WRITE_EXTERNAL_STORAGE:** On newer Android versions (30+), we use Scoped Storage via `MediaStore`, so this permission is not needed.
 
 ---
 
-##🧑‍💻 How It Works (Code Highlights)###1. Starting the CameraThe core logic resides in `MainActivity.kt`. We use the `ProcessCameraProvider` to bind specific "Use Cases" to the lifecycle of the Activity. This ensures the camera opens when the app starts and closes when the app stops, preventing battery drain.
+## 🧑‍💻 How It Works (Code Highlights)
+
+### 1. Starting the Camera
+The core logic resides in `MainActivity.kt`. We use the `ProcessCameraProvider` to bind specific "Use Cases" to the lifecycle of the Activity. This ensures the camera opens when the app starts and closes when the app stops, preventing battery drain.
 
 ```kotlin
 // From MainActivity.kt
@@ -62,14 +64,17 @@ cameraProvider.bindToLifecycle(
 
 ```
 
-###2. Capturing Photos (`ImageCapture`)We create an `ImageCapture` use case. When the user taps the button, we define output options (where to save the file) and call `takePicture`. The result is saved to `MediaStore.Images.Media.EXTERNAL_CONTENT_URI`.
+### 2. Capturing Photos (`ImageCapture`)
+We create an `ImageCapture` use case. When the user taps the button, we define output options (where to save the file) and call `takePicture`. The result is saved to `MediaStore.Images.Media.EXTERNAL_CONTENT_URI`.
 
-###3. Recording Video (`VideoCapture`)We use the `Recorder` and `Recording` classes.
+### 3. Recording Video (`VideoCapture`)
+We use the `Recorder` and `Recording` classes.
 
 * **Audio Handling:** The app explicitly checks for `Manifest.permission.RECORD_AUDIO` before enabling audio in the recording.
 * **State Management:** The UI updates (Red button vs. Blue button) based on `VideoRecordEvent` (Start/Finalize).
 
-###4. Image Analysis (`LuminosityAnalyzer`)This is a powerful feature of CameraX. We implement a custom `ImageAnalysis.Analyzer` that runs on every frame.
+### 4. Image Analysis (`LuminosityAnalyzer`)
+This is a powerful feature of CameraX. We implement a custom `ImageAnalysis.Analyzer` that runs on every frame.
 
 * It accesses the raw buffer of the image.
 * It calculates the average pixel intensity.
@@ -91,7 +96,7 @@ private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnal
 
 ---
 
-##📱 How to Run
+## 📱 How to Run
 1. **Clone the repository** and open it in Android Studio.
 2. **Sync Gradle** to ensure dependencies are downloaded.
 3. **Run on a physical device** (Recommended).
@@ -104,7 +109,7 @@ private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnal
 
 ---
 
-##⚠️ Troubleshooting
+## ⚠️ Troubleshooting
 * **"Permission Denied":** If you denied permissions permanently, go to the App Info settings on your phone and manually enable Camera and Microphone access.
 * **Video Save Error:** Ensure your device has enough storage space. The `MediaStore` output can fail if the disk is full.
 
