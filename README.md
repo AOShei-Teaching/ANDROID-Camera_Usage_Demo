@@ -107,6 +107,7 @@ private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnal
 
 ---
 
-##⚠️ Troubleshooting* **"Permission Denied":** If you denied permissions permanently, go to the App Info settings on your phone and manually enable Camera and Microphone access.
+##⚠️ Troubleshooting
+* **"Permission Denied":** If you denied permissions permanently, go to the App Info settings on your phone and manually enable Camera and Microphone access.
 * **Video Save Error:** Ensure your device has enough storage space. The `MediaStore` output can fail if the disk is full.
 
